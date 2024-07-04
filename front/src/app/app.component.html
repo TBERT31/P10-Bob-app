@@ -1,0 +1,20 @@
+<div id="app">
+  <mat-toolbar color="primary">
+    <span>Bob app</span>
+  </mat-toolbar>
+  <div class="container">
+  <mat-card class="card">
+    <mat-card-title>La blague du jour</mat-card-title>
+    <mat-card-content>
+      <div class="content" *ngIf="(joke$ | async) as joke">
+        <p class="joke">{{ joke.joke }}</p>
+        <p >{{ joke.response }}</p>
+      </div>
+    </mat-card-content>
+    <mat-divider inset></mat-divider>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="getRandomJoke()">VITE UNE AUTRE 😂</button>
+    </mat-card-actions>
+  </mat-card>
+  </div>
+</div>
