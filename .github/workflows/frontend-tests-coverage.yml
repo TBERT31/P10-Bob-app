@@ -1,13 +1,14 @@
 name: Frontend tests and Karma report # Nom du Workflow affiché dans l'interface Github Actions
+run-name: ${{ github.actor }} is running frontend tests and generating Karma coverage reports 🚀
 
 # Déclenche le workflow à chaque push ou pull request sur la branche main
 on:
   push:
     branches:
-    - main
+    - [main, develop, feat/*, fix/*]
   pull_request:
     branches:
-    - main
+    - [main, develop, feat/*, fix/*]
   
 # Définit un job nommé Frontend-test qui s'exécute sur une machine Virtuelle Ubuntu (Version la plus récente)  
 jobs:
@@ -34,7 +35,7 @@ jobs:
           node-version: ${{matrix.node-version}} # Utilise la version de Node.js définie dans la matrice
 
       - name: Run npm install 
-        run: npm install # Installe les dépendances npm
+        run: npm ci # Installe les dépendances npm
 
       - name: Run npm test
         run: npm run test:prod # Exécute les tests sans watcher et en calculant la couverture
