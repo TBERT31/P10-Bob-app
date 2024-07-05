@@ -5,10 +5,16 @@ run-name: ${{ github.actor }} is running frontend tests and generating Karma cov
 on:
   push:
     branches:
-    - [main, develop, feat/*, fix/*]
+      - main
+      - develop
+      - 'feat/*'
+      - 'fix/*'
   pull_request:
     branches:
-    - [main, develop, feat/*, fix/*]
+      - main
+      - develop
+      - 'feat/*'
+      - 'fix/*'
   
 # Définit un job nommé Frontend-test qui s'exécute sur une machine Virtuelle Ubuntu (Version la plus récente)  
 jobs:
