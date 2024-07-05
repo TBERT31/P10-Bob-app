@@ -8,10 +8,17 @@ jobs:
   report:
     runs-on: ubuntu-latest
     steps:
-    - uses: phoenix-actions/test-reporting@v15
-      id: test-report                     # Set ID reference for step
-      with:
-        artifact: jacoco-report           # artifact name
-        name: Jacoco Tests                # Name of the check run which will be created
-        path: '*.xml'                     # Path to test results (inside artifact .zip)
-        reporter: java-junit              # Format of test results
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: jacoco-report
+          path: jacoco-report
+
+      - name: Test Report
+        uses: phoenix-actions/test-reporting@v15
+        id: test-report                     # Set ID reference for step
+        with:
+          artifact: jacoco-report           # artifact name
+          name: Jacoco Tests                # Name of the check run which will be created
+          path: 'jacoco-report/*.xml'       # Path to test results (inside artifact .zip)
+          reporter: java-junit              # Format of test results

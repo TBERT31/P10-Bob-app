@@ -9,7 +9,7 @@ on:
     branches:
     - main
 
-# Définit un job nommé Backend-test qui s'execute sur une machine Virtuelle Unbuntu (Version la plus récente)
+# Définit un job nommé Backend-test qui s'exécute sur une machine Virtuelle Ubuntu (Version la plus récente)
 jobs:
   Backend-test:
     runs-on: ubuntu-latest

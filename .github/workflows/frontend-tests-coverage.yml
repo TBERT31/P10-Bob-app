@@ -45,12 +45,3 @@ jobs:
         with:
           name: karma-report
           path: front/coverage # Chemin vers les fichiers de rapport de couverture
-
-      # Utilise l'action test-reporting pour créer un rapport de test dans GitHub
-      - name: Test Report
-        uses: phoenix-actions/test-reporting@v15
-        if: success() || failure()
-        with:
-          name: Karma Tests
-          path: front/coverage/**/*.xml
-          reporter: mocha-json
