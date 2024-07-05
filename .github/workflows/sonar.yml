@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build and analyze
+    name: SonarCloud build and analyze
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
