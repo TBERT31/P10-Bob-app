@@ -7,6 +7,7 @@ on:
       branches: [main, develop, feat/*, fix/*]
   pull_request:
       branches: [main, develop, feat/*, fix/*]
+      types: [opened, synchronize, reopened]
   
 # Définit un job nommé Frontend-test qui s'exécute sur une machine Virtuelle Ubuntu (Version la plus récente)  
 jobs:
@@ -33,7 +34,7 @@ jobs:
           node-version: ${{matrix.node-version}} # Utilise la version de Node.js définie dans la matrice
 
       - name: Run npm install 
-        run: npm ci # Installe les dépendances npm
+        run: npm ci # Installe les dépendances npm (npm install marche aussi)
 
       - name: Run npm test
         run: npm run test:prod # Exécute les tests sans watcher et en calculant la couverture
