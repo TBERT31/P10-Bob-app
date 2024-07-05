@@ -52,3 +52,12 @@ jobs:
         with:
           name: jacoco-report
           path: back/target/site/jacoco
+      
+      # Utilise l'action test-reporting pour créer un rapport de test dans GitHub
+      - name: Test Report
+        uses: phoenix-actions/test-reporting@v15
+        if: success() || failure()
+        with:
+          name: JaCoCo Tests
+          path: back/target/site/jacoco/jacoco.xml
+          reporter: java-junit
