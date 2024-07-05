@@ -1,5 +1,6 @@
-name: Backend tests (Tests)
+name: Backend tests (Tests) # Nom du Workflow affiché dans l'interface Github Actions
 
+# Déclanche le workflow à chaque push ou pull request sur la branche main
 on:
   push:
     branches:
@@ -8,33 +9,46 @@ on:
     branches:
     - main
 
+# Définit un job nommé Backend-test qui s'execute sur une machine Virtuelle Unbuntu (Version la plus récente)
 jobs:
   Backend-test:
     runs-on: ubuntu-latest
 
+    # Définit `back` comme répertoire de travail par défaut pour toutes les étapes du job.
     defaults:
       run:
         working-directory: back
 
+    # Utilise l'action checkout pour récupérer le code source du dépôt. 
+    # actions/checkout@v3 est une version spécifique de cette action.
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
+      # Utilise l'action setup-java pour configurer l'environnement Java.
+      # Cela installe JDK 11 de la distribution temurin avec l'architecture x64
       - name: Set up JDK 11
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with: 
           java-version: '11'
           distribution: 'temurin'
           architecture: x64
 
+      # Exécute la commande Maven mvn -B package pour compiler le projet et créer le package (jar/war). 
+      # L'option -B (batch mode) supprime les invites interactives. 
+      # La commande s'exécute sur le fichier pom.xml dans le répertoire de travail par défaut
       - name: Build with Maven
         run: mvn -B package --file pom.xml
         
+      # Exécute la commande Maven mvn -B clean test pour nettoyer le répertoire de build précédent et exécuter les tests. 
+      # Cela génère également un rapport de couverture Jacoco.  
       - name: Test with Maven
         run: mvn -B clean test
 
+      # Utilise l'action upload-artifact pour télécharger les fichiers de rapport de couverture générés par Jacoco. 
+      # Ces fichiers sont stockés sous le nom jacoco-report et se trouvent dans le répertoire back/target/site/jacoco.
       - name: Upload coverage report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: jacoco-report
           path: back/target/site/jacoco
