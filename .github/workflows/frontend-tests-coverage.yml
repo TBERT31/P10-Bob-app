@@ -41,6 +41,7 @@ jobs:
       
       - name: Upload coverage report
         uses: actions/upload-artifact@v4 # Utilise l'action upload-artifact pour télécharger les fichiers de rapport de couverture générés par Karma.
+        if: success() || failure()
         with:
           name: karma-report
           path: front/coverage # Chemin vers les fichiers de rapport de couverture
