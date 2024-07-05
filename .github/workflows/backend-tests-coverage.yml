@@ -1,4 +1,4 @@
-name: Backend tests (Tests) # Nom du Workflow affiché dans l'interface Github Actions
+name: Backend tests and JaCoCo report # Nom du Workflow affiché dans l'interface Github Actions
 
 # Déclanche le workflow à chaque push ou pull request sur la branche main
 on:
@@ -20,7 +20,7 @@ jobs:
         working-directory: back
 
     # Utilise l'action checkout pour récupérer le code source du dépôt. 
-    # actions/checkout@v3 est une version spécifique de cette action.
+    # actions/checkout@v4 est une version spécifique de cette action.
     steps:
       - name: Checkout
         uses: actions/checkout@v4
