@@ -1,20 +1,12 @@
 name: Frontend tests and Karma report # Nom du Workflow affiché dans l'interface Github Actions
 run-name: ${{ github.actor }} is running frontend tests and generating Karma coverage reports 🚀
 
-# Déclenche le workflow à chaque push ou pull request sur la branche main
+# Déclanche le workflow à chaque push ou pull request sur les branches main, develop etc...
 on:
   push:
-    branches:
-      - main
-      - develop
-      - 'feat/*'
-      - 'fix/*'
+      branches: [main, develop, feat/*, fix/*]
   pull_request:
-    branches:
-      - main
-      - develop
-      - 'feat/*'
-      - 'fix/*'
+      branches: [main, develop, feat/*, fix/*]
   
 # Définit un job nommé Frontend-test qui s'exécute sur une machine Virtuelle Ubuntu (Version la plus récente)  
 jobs:

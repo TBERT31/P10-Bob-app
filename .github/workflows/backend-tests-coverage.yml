@@ -1,14 +1,12 @@
 name: Backend tests and JaCoCo report # Nom du Workflow affiché dans l'interface Github Actions
 run-name: ${{ github.actor }} is running backend tests and generating JaCoCo coverage reports 🚀
 
-# Déclanche le workflow à chaque push ou pull request sur la branche main
+# Déclanche le workflow à chaque push ou pull request sur les branches main, develop etc...
 on:
   push:
-    branches:
-    - [main, develop, feat/*, fix/*]
+    branches: [main, develop, feat/*, fix/*]
   pull_request:
-    branches:
-    - [main, develop, feat/*, fix/*]
+    branches: [main, develop, feat/*, fix/*]
 
 # Définit un job nommé Backend-test qui s'execute sur une machine Virtuelle Unbuntu (Version la plus récente)
 jobs:
