@@ -1,5 +1,5 @@
 name: SonarCloud, code analysis
-run-name: ${{ github.actor }} is running sonar for front and back 🚀
+run-name: ${{ github.actor }} is running sonarcloud for front and back 🚀
 
 on:
   push:
