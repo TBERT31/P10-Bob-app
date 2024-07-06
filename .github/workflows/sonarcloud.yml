@@ -1,7 +1,6 @@
-name: SonarCloud code quality analysis
+name: SonarCloud code analysis
 run-name: ${{ github.actor }} is running sonar for front and back 🚀
 
-# Déclenche le workflow à chaque push ou pull request sur les branches spécifiées
 on:
   push:
     branches: [main, develop, feat/*, fix/*]
@@ -9,98 +8,44 @@ on:
     branches: [main, develop, feat/*, fix/*]
     types: [opened, synchronize, reopened]
 
-# Définition des jobs
 jobs:
-  backend:
-    defaults:
-      run:
-        working-directory: ${{ github.workspace }}/back
-
-    name: Sonar Cloud Back-End Scan # Nomme la série d'action pour le backend
-    runs-on: ubuntu-latest # Utilise une machine virtuelle Ubuntu la plus récent
-
+  build:
+    name: SonarCloud build and analyze
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout Back-End code
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Désactive les clones superficiels pour une meilleure analyse de la pertinence
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: 21        # Installe JDK 21
-          distribution: 'temurin' # D'autres options de distribution sont possibles.
-          architecture: x64       # Architecture 64 bits
-          cache: "maven"          # Utilise le cache pour Maven
+          java-version: 21
+          distribution: 'temurin' # Alternative distribution options are available.
+          architecture: x64
+          cache: "maven"
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v4
         with:
-          path: ~/.sonar/cache  # Chemin vers le cache de SonarCloud
-          key: ${{ runner.os }}-sonar # Clé unique pour le cache SonarCloud
-          restore-keys: ${{ runner.os }}-sonar # Clé de restauration pour le cache
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
 
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
-          path: ~/.m2 # Chemin vers le cache Maven
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }} # Clé unique basée sur le hash du fichier pom.xml
-          restore-keys: ${{ runner.os }}-m2 # Clé de restauration pour le cache Maven
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
 
       - name: Build with Maven
-        working-directory: ./back # Définit le répertoire de travail pour le backend
-        run: mvn clean package # Exécute les commandes Maven pour nettoyer et packager le projet
+        working-directory: ./back
+        run: mvn clean package
 
-      - name: SonarCloud Back-End Scan
+      - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Nécessaire pour obtenir les informations de PR, si disponibles
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Jeton d'authentification pour SonarCloud
-
-      - name: Upload SonarQube Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: sonarqube-report
-          path: .scannerwork/report-task.txt
-  
-  frontend:
-    defaults:
-      run:
-        working-directory: ${{ github.workspace }}/front
-      
-    strategy:
-      matrix:
-        node-version: [20]
-
-    name: Sonar Cloud Front-End Scan # Nomme la série d'action pour le frontend
-    runs-on: ubuntu-latest # Utilise une machine virtuelle Ubuntu la plus récent
-
-    steps:
-      - name: Checkout Front-End code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Désactive les clones superficiels pour une meilleure analyse de la pertinence
-
-      - name: Set up Node.js ${{matrix.node-version}}
-        uses: actions/setup-node@v4 # Utilise l'action setup-node pour configurer Node.js
-        with:
-          node-version: ${{matrix.node-version}} # Utilise la version de Node.js définie dans la matrice
-            
-      - name: Install frontend dependencies
-        run: |
-          npm ci 
-
-      - name: Build and execute tests
-        run: |
-          npm run build --if-present
-          npm run test:prod
-
-      - name: SonarCloud Front-End Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        with:
-          projectBaseDir: front # Sets the project to analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          run: |
-            echo "Setting up Front-End code quality analysis"
