@@ -33,7 +33,7 @@ jobs:
         with:
           node-version: ${{matrix.node-version}} # Utilise la version de Node.js définie dans la matrice
 
-      - name: Run npm install 
+      - name: Install dependencies
         run: npm ci # Installe les dépendances npm (npm install marche aussi)
 
       - name: Run npm test
