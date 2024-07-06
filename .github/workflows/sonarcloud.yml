@@ -53,8 +53,6 @@ jobs:
 
       - name: SonarCloud Back-End Scan
         uses: SonarSource/sonarcloud-github-action@master
-        with:
-          projectBaseDir: back # Sets the project to analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Nécessaire pour obtenir les informations de PR, si disponibles
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Jeton d'authentification pour SonarCloud
