@@ -12,11 +12,12 @@ on:
 # Définition des jobs
 jobs:
   backend:
-    name: Sonar Cloud Back-End Scan # Nomme la série d'action pour le backend
-    runs-on: ubuntu-latest # Utilise une machine virtuelle Ubuntu la plus récent
     defaults:
       run:
         working-directory: ${{ github.workspace }}/back
+
+    name: Sonar Cloud Back-End Scan # Nomme la série d'action pour le backend
+    runs-on: ubuntu-latest # Utilise une machine virtuelle Ubuntu la plus récent
 
     steps:
       - name: Checkout Back-End code
@@ -47,6 +48,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2 # Clé de restauration pour le cache Maven
 
       - name: Build with Maven
+        working-directory: ./back # Définit le répertoire de travail pour le backend
         run: mvn clean package # Exécute les commandes Maven pour nettoyer et packager le projet
 
       - name: SonarCloud Back-End Scan
@@ -62,14 +64,16 @@ jobs:
           path: .scannerwork/report-task.txt
   
   frontend:
-    name: Sonar Cloud Front-End Scan # Nomme la série d'action pour le frontend
-    runs-on: ubuntu-latest # Utilise une machine virtuelle Ubuntu la plus récent
-    strategy:
-      matrix:
-        node-version: [20] # Définissez ici les versions de Node.js que vous souhaitez utiliser
     defaults:
       run:
         working-directory: ${{ github.workspace }}/front
+      
+    strategy:
+      matrix:
+        node-version: [20]
+
+    name: Sonar Cloud Front-End Scan # Nomme la série d'action pour le frontend
+    runs-on: ubuntu-latest # Utilise une machine virtuelle Ubuntu la plus récent
 
     steps:
       - name: Checkout Front-End code
@@ -77,18 +81,19 @@ jobs:
         with:
           fetch-depth: 0 # Désactive les clones superficiels pour une meilleure analyse de la pertinence
 
-      - name: Set up Node.js ${{ matrix.node-version }}
+      - name: Set up Node.js ${{matrix.node-version}}
         uses: actions/setup-node@v4 # Utilise l'action setup-node pour configurer Node.js
         with:
-          node-version: ${{ matrix.node-version }} # Utilise la version de Node.js définie dans la matrice
-
+          node-version: ${{matrix.node-version}} # Utilise la version de Node.js définie dans la matrice
+            
       - name: Install frontend dependencies
-        run: npm ci 
+        run: |
+          npm ci 
 
       - name: Build and execute tests
         run: |
           npm run build --if-present
-          npm run test:prod -- --code-coverage
+          npm run test:prod
 
       - name: SonarCloud Front-End Scan
         uses: SonarSource/sonarcloud-github-action@master
@@ -97,4 +102,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: echo "Setting up Front-End code quality analysis"
+          run: |
+            echo "Setting up Front-End code quality analysis"
