@@ -31,8 +31,8 @@ jobs:
         uses: actions/setup-java@v4
         with: 
           java-version: '11'
-          distribution: 'temurin'
-          architecture: x64
+          distribution: 'temurin' # Options: 'temurin', 'zulu', 'adopt', 'oracle', 'microsoft', 'openjdk', 'amazon'
+          architecture: x64       # Options: 'x64', 'x86', 'aarch64', 'armv7'
           cache: "maven"
 
       # Exécute la commande Maven mvn -B package pour compiler le projet et créer le package (jar/war). 

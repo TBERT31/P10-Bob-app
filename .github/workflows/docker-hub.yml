@@ -1,5 +1,5 @@
  # Nom du workflow et description de l'exécution
-name: Build and push images to Docker Hub
+name: Build and push images on Docker Hub
 run-name: ${{ github.actor }} is building and pushing front and back on docker-hub 🚀
 
 # Déclenche le workflow sur les événements push et pull request sur les branches spécifiées
