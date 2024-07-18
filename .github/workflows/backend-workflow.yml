@@ -1,5 +1,5 @@
-name: Backend tests and JaCoCo report # Nom du Workflow affiché dans l'interface Github Actions
-run-name: ${{ github.actor }} is running backend tests and generating JaCoCo coverage reports 🚀
+name: Backend Workflow # Nom du Workflow affiché dans l'interface Github Actions
+run-name: ${{ github.actor }} is running backend workflows (Running tests, Coverage, Docker, SonarCloud) 🚀
 
 # Déclanche le workflow à chaque push ou pull request sur les branches main, develop etc...
 on:
@@ -22,8 +22,10 @@ jobs:
     # Utilise l'action checkout pour récupérer le code source du dépôt. 
     # actions/checkout@v4 est une version spécifique de cette action.
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4  # Utilise l'action checkout pour récupérer le code source du dépôt.
+        with:
+          fetch-depth: 0 # Les clones sont désactivés pour une meilleure pertinence de l'analyse.
       
       # Utilise l'action setup-java pour configurer l'environnement Java.
       # Cela installe JDK 11 de la distribution temurin avec l'architecture x64
@@ -56,3 +58,45 @@ jobs:
         with:
           name: jacoco-report
           path: back/target/site/jacoco
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      # Étape de connexion à Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }}
+  
+
+      # Configuration de Docker Buildx (outil pour la construction avancée d'images Docker)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+  
+      # Construction et push de l'image Docker pour le backend
+      - name: Build and push backend Dockerfile
+        uses: docker/build-push-action@v6
+        with:
+            context: ./back
+            file: ./back/Dockerfile
+            push: true
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/bobapp-backend:latest

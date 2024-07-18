@@ -40,7 +40,7 @@ jobs:
         run: npm run test:prod # Exécute les tests sans watcher et en calculant la couverture
 
       - name: Build application
-        run: npm run build # Exécute les tests sans watcher et en calculant la couverture
+        run: npm run build # On vérifie que le projet se build correctement (compilation)
       
       - name: Upload coverage report
         uses: actions/upload-artifact@v4 # Utilise l'action upload-artifact pour télécharger les fichiers de rapport de couverture générés par Karma.
