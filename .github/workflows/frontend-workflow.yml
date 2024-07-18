@@ -1,5 +1,5 @@
 name: Frontend Workflow # Nom du Workflow affiché dans l'interface Github Actions
-run-name: ${{ github.actor }} is running frontend workflows (Running tests, Coverage, Docker, SonarCloud) 🚀
+run-name: ${{ github.actor }} is running frontend workflows (Tests, Coverage, Docker, SonarCloud) 🚀
 
 # Déclanche le workflow à chaque push ou pull request sur les branches main, develop etc...
 on:
@@ -53,8 +53,6 @@ jobs:
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
-        with:
-          projectBaseDir: front
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
