@@ -28,11 +28,11 @@ jobs:
           fetch-depth: 0 # Les clones sont désactivés pour une meilleure pertinence de l'analyse.
       
       # Utilise l'action setup-java pour configurer l'environnement Java.
-      # Cela installe JDK 11 de la distribution temurin avec l'architecture x64
-      - name: Set up JDK 11
+      # Cela installe JDK 17 de la distribution temurin avec l'architecture x64
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with: 
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin' # Options: 'temurin', 'zulu', 'adopt', 'oracle', 'microsoft', 'openjdk', 'amazon'
           architecture: x64       # Options: 'x64', 'x86', 'aarch64', 'armv7'
           cache: "maven"
