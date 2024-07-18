@@ -38,13 +38,16 @@ jobs:
       # Exécute la commande Maven mvn -B package pour compiler le projet et créer le package (jar/war). 
       # L'option -B (batch mode) supprime les invites interactives. 
       # La commande s'exécute sur le fichier pom.xml dans le répertoire de travail par défaut
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
+      - name: Compile with Maven
+        run: mvn -B compile --file pom.xml
         
       # Exécute la commande Maven mvn -B clean test pour nettoyer le répertoire de build précédent et exécuter les tests. 
       # Cela génère également un rapport de couverture Jacoco.  
       - name: Test with Maven
         run: mvn -B clean test
+
+      - name: Package with Maven
+        run: mvn -B package --file pom.xml -Dmaven.test.skip=true
 
       # Utilise l'action upload-artifact pour télécharger les fichiers de rapport de couverture générés par Jacoco. 
       # Ces fichiers sont stockés sous le nom jacoco-report et se trouvent dans le répertoire back/target/site/jacoco.
