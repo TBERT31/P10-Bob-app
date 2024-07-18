@@ -11,7 +11,7 @@ on:
   
 # Définit un job nommé Frontend-test qui s'exécute sur une machine Virtuelle Ubuntu (Version la plus récente)  
 jobs:
-  Frontend-test:
+  Frontend-job:
     runs-on: ubuntu-latest
 
     # Définit `front` comme répertoire de travail par défaut pour toutes les étapes du job.

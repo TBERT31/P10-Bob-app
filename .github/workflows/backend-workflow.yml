@@ -11,7 +11,7 @@ on:
 
 # Définit un job nommé Backend-test qui s'execute sur une machine Virtuelle Unbuntu (Version la plus récente)
 jobs:
-  Backend-test:
+  Backend-job:
     runs-on: ubuntu-latest
 
     # Définit `back` comme répertoire de travail par défaut pour toutes les étapes du job.
