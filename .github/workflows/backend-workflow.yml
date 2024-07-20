@@ -38,6 +38,7 @@ jobs:
           cache: "maven"
 
 
+      # On vérifie si le code source compile bien.     
       - name: Compile with Maven
         run: mvn -B compile --file pom.xml
         
@@ -46,7 +47,7 @@ jobs:
       - name: Test with Maven
         run: mvn -B clean test
 
-
+      # Empaquettage le code compilé dans un format distribué (JAR ou WAR) -> JAR dans notre cas
       - name: Package with Maven
         run: mvn -B package --file pom.xml -Dmaven.test.skip=true
 
@@ -59,6 +60,7 @@ jobs:
           name: jacoco-report
           path: back/target/site/jacoco
 
+      # Mise en cache des paquets SonarCloud pour accélérer les futurs exécutions
       - name: Cache SonarCloud packages
         uses: actions/cache@v4
         with:
@@ -66,6 +68,7 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
+      # Mise en cache des dépendances Maven pour accélérer les futurs exécutions
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
