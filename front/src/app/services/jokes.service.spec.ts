@@ -1,11 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { JokesService } from './jokes.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Joke } from '../model/joke.model';
 
 describe('JokesService', () => {
   let service: JokesService;
   let httpMock: HttpTestingController;
+
+  const mockJoke: Joke = { joke: 'Test joke', response: 'Test response' };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -22,10 +24,11 @@ describe('JokesService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+    const request = httpMock.expectOne('api/joke');
+    request.flush(mockJoke);
   });
 
   it('should call getRandomJoke on service creation', () => {
-    const mockJoke: Joke = { joke: 'Test joke', response: 'Test response' };
     const request = httpMock.expectOne('api/joke');
     request.flush(mockJoke);
 
@@ -35,7 +38,7 @@ describe('JokesService', () => {
   });
 
   it('getRandomJoke should make an HTTP GET request and update the subject', () => {
-    const mockJoke: Joke = { joke: 'Test joke', response: 'Test response' };
+    httpMock.expectOne('api/joke').flush(mockJoke);
 
     service.getRandomJoke();
     const request = httpMock.expectOne('api/joke');
@@ -48,11 +51,12 @@ describe('JokesService', () => {
   });
 
   it('joke$ should return the current value of the subject', () => {
-    const mockJoke: Joke = { joke: 'Test joke', response: 'Test response' };
     service['subject'].next(mockJoke);
-
     service.joke$().subscribe(joke => {
       expect(joke).toEqual(mockJoke);
     });
+
+    const request = httpMock.expectOne('api/joke');
+    request.flush(mockJoke);
   });
 });

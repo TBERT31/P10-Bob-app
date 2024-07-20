@@ -10,4 +10,12 @@ class BobappApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void main() {
+		try {
+			BobappApplication.main(new String[]{});
+		} catch (Exception e) {
+			throw new RuntimeException("L'application n'a pas démarré correctement", e);
+		}
+	}
 }

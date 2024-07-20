@@ -14,10 +14,10 @@ import com.openclassrooms.bobapp.model.Joke;
 
 @Repository
 public class JsonReader {
-    private final ObjectMapper mapper = new ObjectMapper();
-    private JsonNode jsonFile;
+    public final ObjectMapper mapper = new ObjectMapper();
+    public JsonNode jsonFile;
 
-    private JsonReader() {
+    public JsonReader() {
         try {
             this.getJsonFile();
         } catch (IOException | URISyntaxException e) {
@@ -25,7 +25,7 @@ public class JsonReader {
         }
     }
 
-    private static class SingletonHolder {
+    public static class SingletonHolder {
         private final static JsonReader instance = new JsonReader();
     }
 
@@ -39,7 +39,7 @@ public class JsonReader {
         return Arrays.asList(persons);
     }
 
-    private void getJsonFile() throws IOException, URISyntaxException {
+    public void getJsonFile() throws IOException, URISyntaxException {
         if (this.jsonFile == null) {
             InputStream is = getClass().getClassLoader().getResourceAsStream("json/jokes.json");
             if (is == null) {
