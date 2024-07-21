@@ -82,13 +82,11 @@ jobs:
     #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
     #     run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectName="bobapp_backend" -Dsonar.projectKey=tbert31_bobapp-backend -f pom.xml
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+      - name: Build and Sonar Analyze
         env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONT }}
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-            projectBaseDir: back
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
+        run: mvn -B sonar:sonar org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.coverage.jacoco.xmlReportPaths=./target/site/jacoco/jacoco.xml -Dsonar.projectName="bobapp_backend" -Dsonar.projectKey=tbert31_bobapp-backend -f pom.xml -Pcoverage
 
       # Étape de connexion à Docker Hub
       - name: Login to Docker Hub
