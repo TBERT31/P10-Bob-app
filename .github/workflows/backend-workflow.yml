@@ -76,11 +76,19 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Build and Sonar Analyze
+    #   - name: Build and Sonar Analyze
+    #     env:
+    #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+    #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
+    #     run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectName="bobapp_backend" -Dsonar.projectKey=tbert31_bobapp-backend -f pom.xml
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectName="bobapp_backend" -Dsonar.projectKey=tbert31_bobapp-backend -f pom.xml
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONT }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            projectBaseDir: back
 
       # Étape de connexion à Docker Hub
       - name: Login to Docker Hub
