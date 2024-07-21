@@ -17,6 +17,11 @@
 		<java.version>11</java.version>
 		<sonar.organization>tbert31</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.projectKey>tbert31_bobapp-backend</sonar.projectKey>
+		<sonar.coverage.jacoco.xmlReportPaths>
+			${project.basedir}/target/site/
+			jacoco-aggregate/jacoco.xml
+		</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -83,6 +88,11 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.10.0.2594</version>
 			</plugin>
 		</plugins>
 	</build>
