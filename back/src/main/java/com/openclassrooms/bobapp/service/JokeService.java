@@ -1,7 +1,7 @@
 package com.openclassrooms.bobapp.service;
 
+import java.security.SecureRandom;
 import java.util.List;
-//import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
@@ -13,15 +13,16 @@ import java.util.concurrent.ThreadLocalRandom;
 public class JokeService {
     
     private final JsonReader jsonReader;
+    private final SecureRandom secureRandom;
 
     JokeService(JsonReader jsonReader) {
         this.jsonReader = jsonReader;
+        this.secureRandom = new SecureRandom();
     }
 
     public Joke getRandomJoke() {
         List<Joke> jokes = this.jsonReader.getJokes();
-        // Utilisation de ThreadLocalRandom pour une génération sûre de nombres aléatoires dans un environnement multithreadé
-        int randomIndex = ThreadLocalRandom.current().nextInt(jokes.size());
+        int randomIndex = secureRandom.nextInt(jokes.size());
         return jokes.get(randomIndex);
     }
 }

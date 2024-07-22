@@ -2,7 +2,6 @@ package com.openclassrooms.bobapp.data;
 
 import java.io.IOException;
 import java.io.InputStream;
-//import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,7 +23,6 @@ public class JsonReader {
         try {
             this.getJsonFile();
         } catch (IOException e) {
-            //e.printStackTrace();
             logger.error("Erreur lors du chargement du fichier JSON", e);
         }
     }

@@ -22,7 +22,7 @@ class JsonReaderTest {
     }
 
     @Test
-    void testGetJokes() throws IOException, URISyntaxException {
+    void testGetJokes() {
         // Arrange
         List<Joke> jokes = jsonReader.getJokes();
 
