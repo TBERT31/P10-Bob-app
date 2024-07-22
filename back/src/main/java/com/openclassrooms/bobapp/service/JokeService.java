@@ -1,7 +1,7 @@
 package com.openclassrooms.bobapp.service;
 
 import java.util.List;
-import java.util.Random;
+//import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
@@ -20,6 +20,7 @@ public class JokeService {
 
     public Joke getRandomJoke() {
         List<Joke> jokes = this.jsonReader.getJokes();
+        // Utilisation de ThreadLocalRandom pour une génération sûre de nombres aléatoires dans un environnement multithreadé
         int randomIndex = ThreadLocalRandom.current().nextInt(jokes.size());
         return jokes.get(randomIndex);
     }

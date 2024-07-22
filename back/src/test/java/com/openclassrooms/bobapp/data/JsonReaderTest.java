@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 
-public class JsonReaderTest {
+class JsonReaderTest {
 
     private static JsonReader jsonReader;
 
@@ -52,7 +52,7 @@ public class JsonReaderTest {
     void testIOExceptionAndURISyntaxException() {
         JsonReader jsonReaderSpy = new JsonReader() {
             @Override
-            protected void getJsonFile() throws IOException, URISyntaxException {
+            protected void getJsonFile() throws IOException {
                 throw new IOException("Test IOException");
             }
         };

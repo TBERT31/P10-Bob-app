@@ -3,6 +3,8 @@ package com.openclassrooms.bobapp;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 @SpringBootTest
 class BobappApplicationTests {
 
@@ -13,10 +15,7 @@ class BobappApplicationTests {
 
 	@Test
 	void main() {
-		try {
-			BobappApplication.main(new String[]{});
-		} catch (Exception e) {
-			throw new RuntimeException("L'application n'a pas démarré correctement", e);
-		}
+		// Vérifie que l'application démarre sans lancer d'exception
+		assertDoesNotThrow(() -> BobappApplication.main(new String[]{}), "L'application n'a pas démarré correctement");
 	}
 }
