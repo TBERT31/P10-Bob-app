@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.openclassrooms.bobapp.data.JsonReader;
 import com.openclassrooms.bobapp.model.Joke;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class JokeService {
