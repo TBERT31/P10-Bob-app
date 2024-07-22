@@ -10,7 +10,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -29,7 +28,7 @@ public class JokeServiceTest {
     }
 
     @Test
-    public void testGetRandomJoke() {
+    void testGetRandomJoke() {
         // Given
         Joke joke1 = new Joke("C'est l'histoire du ptit dej, tu la connais ?", "Pas de bol.");
         Joke joke2 = new Joke("C'est l'histoire d'une blague vaseuse.", "Mets tes bottes.");

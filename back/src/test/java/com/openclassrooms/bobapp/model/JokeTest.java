@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class JokeTest {
 
     @Test
-    public void testJokeConstructorAndGetters() {
+    void testJokeConstructorAndGetters() {
         // Given
         String expectedJoke = "Why did the scarecrow win an award?";
         String expectedResponse = "Because he was outstanding in his field.";
@@ -21,7 +21,7 @@ public class JokeTest {
     }
 
     @Test
-    public void testJokeSetters() {
+    void testJokeSetters() {
         // Given
         Joke joke = new Joke();
         String newJoke = "Pourquoi les Belges viennent-ils à la messe avec du savon ?";
@@ -37,7 +37,7 @@ public class JokeTest {
     }
 
     @Test
-    public void testJokeToString() {
+    void testJokeToString() {
         // Given
         Joke joke = new Joke("C'est quoi une chauve-souris avec une perruque ?", "Une souris.");
 

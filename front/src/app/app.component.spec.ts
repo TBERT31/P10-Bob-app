@@ -7,7 +7,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { of } from 'rxjs';
 import { AppComponent } from './app.component';
 import {JokesService} from "./services/jokes.service";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
 import { Joke } from './model/joke.model';
 
 describe('AppComponent', () => {

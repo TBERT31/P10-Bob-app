@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class JokeControllerTest {
+class JokeControllerTest {
 
     @Mock
     private JokeService jokeService;

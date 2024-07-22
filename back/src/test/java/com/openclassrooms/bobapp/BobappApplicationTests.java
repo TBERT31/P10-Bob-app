@@ -8,6 +8,7 @@ class BobappApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// Ce test vérifie simplement que le contexte de l'application se charge correctement.
 	}
 
 	@Test

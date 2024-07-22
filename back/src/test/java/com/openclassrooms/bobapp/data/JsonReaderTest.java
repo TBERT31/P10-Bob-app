@@ -1,18 +1,13 @@
 package com.openclassrooms.bobapp.data;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.openclassrooms.bobapp.model.Joke;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -27,7 +22,7 @@ public class JsonReaderTest {
     }
 
     @Test
-    public void testGetJokes() throws IOException, URISyntaxException {
+    void testGetJokes() throws IOException, URISyntaxException {
         // Arrange
         List<Joke> jokes = jsonReader.getJokes();
 
@@ -44,7 +39,7 @@ public class JsonReaderTest {
     }
 
     @Test
-    public void testGetInstance() {
+    void testGetInstance() {
         // Arrange & Act
         JsonReader instance1 = JsonReader.getInstance();
         JsonReader instance2 = JsonReader.getInstance();
@@ -54,7 +49,7 @@ public class JsonReaderTest {
     }
 
     @Test
-    public void testIOExceptionAndURISyntaxException() {
+    void testIOExceptionAndURISyntaxException() {
         JsonReader jsonReaderSpy = new JsonReader() {
             @Override
             protected void getJsonFile() throws IOException, URISyntaxException {
@@ -69,7 +64,7 @@ public class JsonReaderTest {
 
 
     @Test
-    public void testSingletonHolder() {
+    void testSingletonHolder() {
         // Use reflection to access the private constructor
         try {
             java.lang.reflect.Constructor<JsonReader> constructor = JsonReader.class.getDeclaredConstructor();
