@@ -26,7 +26,7 @@ public class JsonReader {
     }
 
     private static class SingletonHolder {
-        private final static JsonReader instance = new JsonReader();
+        private static final JsonReader instance = new JsonReader();
     }
 
     public static JsonReader getInstance() {

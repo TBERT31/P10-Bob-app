@@ -45,6 +45,6 @@ public class JokeTest {
         String jokeString = joke.toString();
 
         // Then
-        assertThat(jokeString).isEqualTo("Joke [joke=C'est quoi une chauve-souris avec une perruque ?, response=Une souris.]");
+        assertThat(jokeString).isEqualTo("Joke [question=C'est quoi une chauve-souris avec une perruque ?, response=Une souris.]");
     }
 }
