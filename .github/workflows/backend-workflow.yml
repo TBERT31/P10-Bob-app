@@ -36,26 +36,17 @@ jobs:
           distribution: 'temurin' # Options: 'temurin', 'zulu', 'adopt', 'oracle', 'microsoft', 'openjdk', 'amazon'
           architecture: x64       # Options: 'x64', 'x86', 'aarch64', 'armv7'
           cache: "maven"
-
-
-      # On vérifie si le code source compile bien.     
-      - name: Compile with Maven
-        run: mvn -B compile --file pom.xml
         
       # Exécute la commande Maven mvn -B clean test pour nettoyer le répertoire de build précédent et exécuter les tests. 
       # Cela génère également un rapport de couverture Jacoco.  
       - name: Test with Maven
         run: mvn -B clean test
 
-      # Empaquettage le code compilé dans un format distribué (JAR ou WAR) -> JAR dans notre cas
-      - name: Package with Maven
-        run: mvn -B package --file pom.xml -Dmaven.test.skip=true
-
       # Utilise l'action upload-artifact pour télécharger les fichiers de rapport de couverture générés par Jacoco. 
       # Ces fichiers sont stockés sous le nom jacoco-report et se trouvent dans le répertoire back/target/site/jacoco.
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
-        if: success() || failure()
+        if: success() 
         with:
           name: jacoco-report
           path: back/target/site/jacoco
