@@ -36,29 +36,22 @@ jobs:
           distribution: 'temurin' # Options: 'temurin', 'zulu', 'adopt', 'oracle', 'microsoft', 'openjdk', 'amazon'
           architecture: x64       # Options: 'x64', 'x86', 'aarch64', 'armv7'
           cache: "maven"
-
-
-      - name: Compile with Maven
-        run: mvn -B compile --file pom.xml
         
       # Exécute la commande Maven mvn -B clean test pour nettoyer le répertoire de build précédent et exécuter les tests. 
       # Cela génère également un rapport de couverture Jacoco.  
       - name: Test with Maven
         run: mvn -B clean test
 
-
-      - name: Package with Maven
-        run: mvn -B package --file pom.xml -Dmaven.test.skip=true
-
       # Utilise l'action upload-artifact pour télécharger les fichiers de rapport de couverture générés par Jacoco. 
       # Ces fichiers sont stockés sous le nom jacoco-report et se trouvent dans le répertoire back/target/site/jacoco.
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
-        if: success() || failure()
+        if: success() 
         with:
           name: jacoco-report
           path: back/target/site/jacoco
 
+      # Mise en cache des paquets SonarCloud pour accélérer les futurs exécutions
       - name: Cache SonarCloud packages
         uses: actions/cache@v4
         with:
@@ -66,6 +59,7 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
+      # Mise en cache des dépendances Maven pour accélérer les futurs exécutions
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
@@ -73,12 +67,21 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+    #   - name: SonarCloud Scan
+    #     uses: SonarSource/sonarcloud-github-action@master
+    #     env:
+    #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
+    #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #     with:
+    #         projectBaseDir: back
+
       - name: Build and Sonar Analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectName="bobapp_backend" -Dsonar.projectKey=tbert31_bobapp-backend -f pom.xml
 
+        
       # Étape de connexion à Docker Hub
       - name: Login to Docker Hub
         uses: docker/login-action@v3
