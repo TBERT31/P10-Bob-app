@@ -1,23 +1,23 @@
 package com.openclassrooms.bobapp.model;
 
 public class Joke {
-    public String joke;
-    public String response;
+    private String question;
+    private String response;
 
     public Joke() {
     }
 
-    public Joke(String joke, String response) {
-        this.joke = joke;
+    public Joke(String question, String response) {
+        this.question = question;
         this.response = response;
     }
 
     public String getJoke() {
-        return joke;
+        return question;
     }
 
-    public void setJoke(String joke) {
-        this.joke = joke;
+    public void setJoke(String question) {
+        this.question = question;
     }
 
     public String getResponse() {
@@ -30,6 +30,6 @@ public class Joke {
 
     @Override
     public String toString() {
-        return "Joke [joke=" + joke + ", response=" + response + "]";
+        return "Joke [question=" + question + ", response=" + response + "]";
     }
 }
